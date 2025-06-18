@@ -1,0 +1,26 @@
+FROM python:3.9-slim-buster
+
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
+
+# Copia o arquivo de requisitos para o diretório de trabalho
+COPY requirements.txt .
+
+# Instala as dependências Python
+# O --no-cache-dir garante que não sejam criados arquivos de cache de pip,
+# o que reduz o tamanho final da imagem.
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia todo o código da sua aplicação para o diretório de trabalho no contêiner
+# Certifique-se de que a estrutura de diretórios (app/, interface/, etc.)
+# esteja correta em relação à raiz do seu projeto.
+COPY . .
+
+# Expõe a porta padrão do Streamlit
+EXPOSE 8501
+
+# Comando para iniciar a aplicação Streamlit
+# A aplicação Streamlit está localizada em interface/streamlit_app.py
+# O --server.port $PORT é necessário para que o Render injete a porta correta.
+# O --server.address 0.0.0.0 é necessário para que a aplicação seja acessível de fora do contêiner.
+CMD ["streamlit", "run", "interface/streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]

@@ -1,6 +1,6 @@
 import logging
 from logging.handlers import RotatingFileHandler
-from config import LOGS_DIR
+from app.config import LOGS_DIR
 
 
 def setup_logging():

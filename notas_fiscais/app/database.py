@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 from collections import namedtuple
-# Importa DB_PATH e logger do diretório 'app'
+# Importa DB_PATH e logger do diretório 'app' usando importação absoluta
 from app.config import DB_PATH
 from app.logger import logger
 

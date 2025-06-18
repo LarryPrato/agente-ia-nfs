@@ -1,8 +1,9 @@
+# app/extract.py
 from pathlib import Path
 from collections import namedtuple
 import zipfile
 import pandas as pd
-# Importa TEMP_DIR e logger do diretório 'app'
+# Importa TEMP_DIR e logger do diretório 'app' usando importação absoluta
 from app.config import TEMP_DIR
 from app.logger import logger
 

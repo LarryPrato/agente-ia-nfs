@@ -6,8 +6,8 @@ from langchain_community.utilities import SQLDatabase
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from transformers import pipeline
-from config import DB_PATH, ENV, LLM_CLOUD_MODEL_NAME, LLM_LOCAL_MODEL_PATH, HF_TOKEN
-from logger import logger
+from app.config import DB_PATH, ENV, LLM_CLOUD_MODEL_NAME, LLM_LOCAL_MODEL_PATH, HF_TOKEN
+from app.logger import logger
 
 QueryResult = namedtuple("QueryResult", ["data", "status", "message"])
 

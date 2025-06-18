@@ -1,6 +1,6 @@
 from collections import namedtuple
 import pandas as pd
-# Importa o logger do diretório 'app'
+# Importa o logger do diretório 'app' usando importação absoluta
 from app.logger import logger
 
 # Define um namedtuple para padronizar o resultado da transformação

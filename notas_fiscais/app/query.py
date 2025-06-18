@@ -48,7 +48,6 @@ def get_llm():
                 LLM_CLOUD_MODEL_NAME,
                 trust_remote_code=True,
                 device_map="auto",  # Permite que transformers use CPU/GPU automaticamente
-                load_in_8bit=True  # Tentar carregar em 8-bit para economizar memória (requer bitsandbytes e accelerate)
             )
 
             # Cria um pipeline de geração de texto com o modelo carregado

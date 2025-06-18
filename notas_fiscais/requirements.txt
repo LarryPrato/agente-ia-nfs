@@ -1,7 +1,6 @@
 fastapi==0.111.0
 uvicorn==0.30.1
 pandas==2.2.2
-sqlite3==0.1.1 # Note: sqlite3 comes with Python, this might be a placeholder or for specific versioning
 langchain==0.2.5
 langchain-community==0.2.5
 langchain-core==0.2.10

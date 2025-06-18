@@ -11,7 +11,6 @@ app = FastAPI(
     description="API para upload de dados de notas fiscais (ZIP) e consulta em linguagem natural usando agentes de IA.",
 )
 
-
 @app.post("/upload-and-process/", status_code=status.HTTP_200_OK)
 async def upload_and_process_file(file: UploadFile = File(...)):
     """Faz upload de um arquivo .zip e o processa via pipeline ETL."""
@@ -23,10 +22,12 @@ async def upload_and_process_file(file: UploadFile = File(...)):
     # Salva o arquivo temporariamente em INPUT_DIR para que run_etl_pipeline possa acessá-lo
     file_path = INPUT_DIR / file.filename
     try:
+        # Abre o arquivo em modo de escrita binária e escreve o conteúdo do upload
         with open(file_path, "wb") as f:
             f.write(await file.read())
         logger.info(f"Arquivo '{file.filename}' salvo temporariamente em '{file_path}'.")
 
+        # Executa o pipeline ETL com o nome do arquivo ZIP
         success = run_etl_pipeline(file.filename)
 
         if success:

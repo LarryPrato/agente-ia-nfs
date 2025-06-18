@@ -7,9 +7,13 @@ import sys
 from pathlib import Path
 import pandas as pd
 
-# Garante que podemos importar config.py da pasta pai
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from config import API_BASE_URL
+# Adiciona a pasta raiz e a pasta app ao sys.path para imports funcionarem na nuvem
+BASE_DIR = Path(__file__).resolve().parent.parent
+APP_DIR = BASE_DIR / "app"
+sys.path.append(str(BASE_DIR))
+sys.path.append(str(APP_DIR))
+
+from app.config import API_BASE_URL
 
 st.set_page_config(page_title="Agente IA - Notas Fiscais", layout="wide")
 

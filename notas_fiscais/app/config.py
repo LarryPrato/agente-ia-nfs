@@ -1,18 +1,24 @@
 import os
 from pathlib import Path
-import streamlit as st # Importado para usar st.secrets
+# Removido 'import streamlit as st' daqui para evitar erro na API
 
 def in_streamlit_cloud():
     # Verifica se a aplicação está sendo executada no ambiente do Streamlit Cloud
-    # Uma forma comum é verificar a presença de `st.secrets` ou variáveis específicas do ambiente.
-    return "streamlit.io" in os.environ.get("STREAMLIT_SERVER_URL", "") or "streamlit.io" in st.__file__
+    # Baseado em variáveis de ambiente definidas pelo Streamlit Cloud
+    return "STREAMLIT_SERVER_URL" in os.environ or "STREAMLIT_CLOUD" in os.environ
 
 
 def get_env_var(key, default=None):
     if in_streamlit_cloud():
-        # No Streamlit Cloud, as variáveis de ambiente são acessadas via st.secrets
-        # st.secrets é um objeto semelhante a um dicionário para segredos
-        return st.secrets.get(key, default)
+        # Apenas tenta importar streamlit DENTRO desta função se for ambiente cloud
+        try:
+            import streamlit as st
+            # No Streamlit Cloud, as variáveis de ambiente são acessadas via st.secrets
+            return st.secrets.get(key, default)
+        except ImportError:
+            # Caso não consiga importar Streamlit, talvez não seja o ambiente Streamlit Cloud
+            # ou haja algum problema de setup. Fallback para os.getenv
+            return os.getenv(key, default)
     else:
         # Em ambiente local, carregar variáveis de ambiente de um arquivo .env
         from dotenv import load_dotenv
@@ -39,7 +45,7 @@ MODELS_DIR.mkdir(exist_ok=True)
 ENV = get_env_var("ENV", "local").lower() # 'local' é o padrão
 
 # LLM_CLOUD_MODEL_NAME: Nome do modelo para uso em ambiente de nuvem (ex: Hugging Face)
-LLM_CLOUD_MODEL_NAME = get_env_var("LLM_CLOUD_MODEL_NAME", "mistralai/Mistral-7B-Instruct-v0.3")
+LLM_CLOUD_MODEL_NAME = get_env_var("LLM_CLOUD_MODEL_NAME", "TinyLlama/TinyLlama-1.1B-Chat-v1.0") # <-- Alterado para TinyLlama
 # HF_TOKEN: Token de autenticação para Hugging Face, necessário para modelos privados ou cotas
 HF_TOKEN = get_env_var("HF_TOKEN")
 

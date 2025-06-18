@@ -11,3 +11,5 @@ streamlit==1.36.0
 requests==2.32.3
 pydantic-settings==2.3.3 # For Pydantic V2 settings management if used
 torch
+accelerate
+bitsandbytes

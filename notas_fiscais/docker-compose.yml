@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mapeia volumes para persistência de dados e modelos
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      # Carrega variáveis de ambiente do arquivo .env.
+      # Se .env não for usado, pode definir as variáveis diretamente aqui:
+      # ENV: "cloud"
+      # LLM_CLOUD_API_KEY: "sua_chave_aqui"
+      # LLM_CLOUD_MODEL_NAME: "google/flan-t5-base"
+      # LLM_LOCAL_MODEL_NAME: "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+      # API_HOST: "0.0.0.0"
+      # API_PORT: "8000"
+    env_file:
+      - ./.env # Carrega variáveis de ambiente do arquivo .env
+    restart: on-failure # Reinicia se o contêiner falhar
+    command: ["python", "run.py", "start_api"] # Garante que a API seja iniciada
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      # O Streamlit precisa saber como se conectar à API
+      API_HOST: "api"
+      API_PORT: "8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - api # Garante que a API esteja rodando antes do Streamlit
+    command: ["python", "run.py", "start_streamlit"]
+    restart: on-failure

@@ -6,8 +6,8 @@ from pathlib import Path
 import pandas as pd
 
 # Adiciona o diretório raiz do projeto ao sys.path para importações relativas funcionarem
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 # Importa as configurações da sua aplicação backend
 from app.config import API_BASE_URL, RENDER_API_URL, in_streamlit_cloud

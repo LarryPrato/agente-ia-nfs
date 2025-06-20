@@ -9,7 +9,7 @@ from langchain_core.prompts import ChatPromptTemplate
 # Importa pipeline do Transformers para modelos Hugging Face
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM  # Adicionado AutoTokenizer, AutoModelForCausalLM
 # Importa variáveis de configuração e logger do diretório 'app' usando importação absoluta
-from app.config import DB_PATH, ENV, LLM_CLOUD_MODEL_NAME, LLM_LOCAL_MODEL_PATH, HF_TOKEN
+from app.config import DB_PATH, ENV, LLM_CLOUD_MODEL_NAME, HF_TOKEN
 from app.logger import logger
 import os
 from huggingface_hub import login  # Adicionado para login explícito
@@ -22,11 +22,6 @@ _llm_instance = None
 
 
 def get_llm():
-    """
-    Inicializa e retorna uma instância do Large Language Model (LLM)
-    baseado na variável de ambiente ENV (cloud ou local).
-    O LLM é cacheado para evitar recarregamento em cada requisição.
-    """
     global _llm_instance
     if _llm_instance is not None:
         logger.info("Retornando LLM do cache.")

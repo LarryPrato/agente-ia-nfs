@@ -65,7 +65,7 @@ if uploaded_file:
 
                         # Faz a requisição POST para o endpoint de upload da API
                         response = requests.post(
-                            f"{API_BASE_URL}/upload-and-process/",
+                            f"{API_BASE_URL}/upload/",
                             files=files,
                             timeout=600  # Aumenta o timeout para 10 minutos para processamentos longos
                         )

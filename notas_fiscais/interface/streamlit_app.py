@@ -119,7 +119,7 @@ if st.button("Perguntar ao Agente"):
                 if response.status_code == 200:
                     result = response.json()
                     status_api = result.get("status", "info")
-                    message = result.get("message", "Nenhuma mensagem da API.")
+                    message = result.get("message") or result.get("answer") or "Nenhuma resposta recebida da API."
                     data = result.get("data", [])  # Espera uma lista de dicionários para os dados
 
                     if status_api == "success":

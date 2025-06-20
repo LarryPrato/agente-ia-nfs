@@ -1,6 +1,9 @@
-import os
+# app/config.py
+import streamlit as st
 from pathlib import Path
 
+def get_env_var(key, default=None):
+    return st.secrets.get(key, default)
 
 # Caminhos base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,16 +17,9 @@ MODELS_DIR = BASE_DIR / "models"
 for d in [INPUT_DIR, TEMP_DIR, LOGS_DIR, MODELS_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
-# Variáveis obrigatórias para nuvem
+# Variáveis obrigatórias (vêm de st.secrets no Streamlit Cloud)
 ENV = "cloud"
 HF_TOKEN = get_env_var("HF_TOKEN")
-API_BASE_URL = get_env_var("API_BASE_URL")
 LLM_CLOUD_MODEL_NAME = get_env_var("LLM_CLOUD_MODEL_NAME", "TinyLlama/TinyLlama-1.1B-Chat-v1.0")
-
-# LLM_CLOUD_MODEL_NAME: Nome do modelo para uso em ambiente de nuvem (ex: Hugging Face)
-LLM_CLOUD_MODEL_NAME = get_env_var("LLM_CLOUD_MODEL_NAME", "TinyLlama/TinyLlama-1.1B-Chat-v1.0") # <-- Alterado para TinyLlama
-# HF_TOKEN: Token de autenticação para Hugging Face, necessário para modelos privados ou cotas
-HF_TOKEN = get_env_var("HF_TOKEN")
-
-API_BASE_URL = get_env_var("API_BASE_URL", "http://localhost:8000")
-RENDER_API_URL = get_env_var("RENDER_API_URL")
+API_BASE_URL = get_env_var("API_BASE_URL")  # ← Obrigatório informar nos secrets
+RENDER_API_URL = get_env_var("RENDER_API_URL")  # ← opcional, você pode remover se não usar

@@ -4,13 +4,15 @@ import os
 import sys
 from pathlib import Path
 import pandas as pd
+import logging
 
 # Adiciona o diretório raiz do projeto ao sys.path para importações relativas funcionarem
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-# Importa as configurações da sua aplicação backend
-from app.logger import logger  # Importa o logger para usar no Streamlit
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 from app.config import get_env_var
 API_BASE_URL = get_env_var("API_BASE_URL")
 

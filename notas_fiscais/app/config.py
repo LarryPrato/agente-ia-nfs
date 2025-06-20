@@ -42,17 +42,13 @@ MODELS_DIR.mkdir(exist_ok=True)
 
 # Variáveis de ambiente híbridas (lidas de .env ou st.secrets)
 # ENV: Define o ambiente de execução ('local' ou 'cloud')
-ENV = get_env_var("ENV", "local").lower() # 'local' é o padrão
+ENV = get_env_var("ENV").lower() # 'local' é o padrão
 
 # LLM_CLOUD_MODEL_NAME: Nome do modelo para uso em ambiente de nuvem (ex: Hugging Face)
 LLM_CLOUD_MODEL_NAME = get_env_var("LLM_CLOUD_MODEL_NAME", "TinyLlama/TinyLlama-1.1B-Chat-v1.0") # <-- Alterado para TinyLlama
 # HF_TOKEN: Token de autenticação para Hugging Face, necessário para modelos privados ou cotas
 HF_TOKEN = get_env_var("HF_TOKEN")
 
-# LLM_LOCAL_MODEL_FILENAME: Nome do arquivo do modelo LLM local (ex: GGUF)
-LLM_LOCAL_MODEL_FILENAME = get_env_var("LLM_LOCAL_MODEL_PATH", "llama-2-7b-chat.Q4_K_M.gguf")
-# LLM_LOCAL_MODEL_PATH: Caminho completo para o modelo LLM local
-LLM_LOCAL_MODEL_PATH = MODELS_DIR / LLM_LOCAL_MODEL_FILENAME
 
 # API_BASE_URL: URL base da API FastAPI. Essencial para a comunicação Streamlit <-> API.
 # Em ambiente local, será localhost. Em ambiente de nuvem, precisa ser a URL pública da API.

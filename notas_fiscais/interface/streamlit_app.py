@@ -10,8 +10,10 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 # Importa as configurações da sua aplicação backend
-from app.config import API_BASE_URL, RENDER_API_URL, in_streamlit_cloud
 from app.logger import logger  # Importa o logger para usar no Streamlit
+from app.config import get_env_var
+API_BASE_URL = get_env_var("API_BASE_URL")
+
 
 # --- Configuração Inicial do Streamlit ---
 st.set_page_config(
@@ -28,24 +30,6 @@ Bem-vindo ao Agente IA de Notas Fiscais!
 1.  **Faça upload de um arquivo ZIP** contendo `Cabecalho.csv` e `Itens.csv`.
 2.  **Envie suas perguntas** em linguagem natural sobre os dados carregados.
 """)
-
-# --- Ajuste da URL Base da API para Ambientes de Nuvem ---
-# Esta é uma correção crucial para o deployment no Streamlit Cloud.
-# Se a API_BASE_URL ainda aponta para localhost e estamos na nuvem,
-# tentamos usar a RENDER_API_URL (que deve ser configurada nos Streamlit Secrets).
-if "localhost" in API_BASE_URL and in_streamlit_cloud():
-    if RENDER_API_URL and "http" in RENDER_API_URL:
-        # Substitui a URL local pela URL pública da API
-        API_BASE_URL = RENDER_API_URL
-        st.info(f"🔄 API_BASE_URL corrigido automaticamente para o ambiente de nuvem: `{API_BASE_URL}`")
-        logger.info(f"API_BASE_URL ajustada para: {API_BASE_URL}")
-    else:
-        st.error(
-            "❌ `API_BASE_URL` está configurado para 'localhost' e nenhuma `RENDER_API_URL` pública "
-            "foi encontrada nos Streamlit Secrets. Por favor, defina `RENDER_API_URL` nos Secrets do Streamlit "
-            "com a URL pública da sua API (ex: do Render, Heroku, etc.)."
-        )
-        st.stop()  # Interrompe a execução do app se a API não puder ser acessada
 
 # --- Seção de Upload de Arquivos ---
 st.subheader("📎 Upload do Arquivo ZIP das Notas Fiscais")

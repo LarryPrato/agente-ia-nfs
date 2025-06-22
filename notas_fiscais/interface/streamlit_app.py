@@ -121,6 +121,15 @@ if st.button("Perguntar ao Agente"):
                     status_api = result.get("status", "info")
                     message = result.get("message") or result.get("answer") or "Nenhuma resposta recebida da API."
                     data = result.get("data", [])  # Espera uma lista de dicionários para os dados
+                    result = response.json() #######
+                    message = result["message"] #######
+                    
+                    if message.startswith('|'): #######
+                        #st.markdown("### 📋 Resultado Tabular") #######
+                        st.markdown(message, unsafe_allow_html=True) #######
+                    else: #######
+                        st.success(f"✅Resposta do Agente: {message}") #######
+                    '''
                     ###<-
                     if status_api == "success":
                         message = result["message"]
@@ -134,6 +143,7 @@ if st.button("Perguntar ao Agente"):
                     else:
                         st.error(f"❌ {message}")
                     ###<-
+                    '''
                     # if status_api == "success":
                     #     st.markdown("### 📋 Resposta do Agente")
                     #     st.markdown(message, unsafe_allow_html=True)

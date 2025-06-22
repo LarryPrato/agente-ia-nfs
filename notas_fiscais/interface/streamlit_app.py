@@ -129,21 +129,21 @@ if st.button("Perguntar ao Agente"):
                         st.markdown(message, unsafe_allow_html=True) #######
                     else: #######
                         st.success(f"✅Resposta do Agente: {message}") #######
-                    '''
-                    ###<-
-                    if status_api == "success":
-                        message = result["message"]
-                        if message.strip().startswith('|'):
-                            #st.markdown("### 📋 Resultado Tabular")
-                            st.markdown(message, unsafe_allow_html=True)
-                        else:
-                            st.success(f"✅ Resposta do Agente {message}")
-                    elif status_api == "warning":
-                        st.warning(f"⚠️ {message}")
-                    else:
-                        st.error(f"❌ {message}")
-                    ###<-
-                    '''
+                    # '''
+                    # ###<-
+                    # if status_api == "success":
+                    #     message = result["message"]
+                    #     if message.strip().startswith('|'):
+                    #         #st.markdown("### 📋 Resultado Tabular")
+                    #         st.markdown(message, unsafe_allow_html=True)
+                    #     else:
+                    #         st.success(f"✅ Resposta do Agente {message}")
+                    # elif status_api == "warning":
+                    #     st.warning(f"⚠️ {message}")
+                    # else:
+                    #     st.error(f"❌ {message}")
+                    # ###<-
+                    # '''
                     # if status_api == "success":
                     #     st.markdown("### 📋 Resposta do Agente")
                     #     st.markdown(message, unsafe_allow_html=True)

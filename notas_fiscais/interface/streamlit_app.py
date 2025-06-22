@@ -125,10 +125,10 @@ if st.button("Perguntar ao Agente"):
                     if status_api == "success":
                         message = result["message"]
                         if message.strip().startswith('|'):
-                            st.markdown("### 📋 Resultado Tabular")
+                            #st.markdown("### 📋 Resultado Tabular")
                             st.markdown(message, unsafe_allow_html=True)
                         else:
-                            st.success(f"✅ {message}")
+                            st.success(f"✅ Resposta do Agente {message}")
                     elif status_api == "warning":
                         st.warning(f"⚠️ {message}")
                     else:

@@ -120,43 +120,39 @@ if st.button("Perguntar ao Agente"):
                     result = response.json()
                     status_api = result.get("status", "info")
                     message = result.get("message") or result.get("answer") or "Nenhuma resposta recebida da API."
-                    data = result.get("data", [])  # Espera uma lista de dicionários para os dados
-                    # result = response.json() #######
-                    # message = result["message"] #######
-                    
-                    # if message.startswith('|'): #######
-                    #     #st.markdown("### 📋 Resultado Tabular") #######
-                    #     st.markdown(message, unsafe_allow_html=True) #######
-                    # else: #######
-                    #     st.success(f"✅Resposta do Agente: {message}") #######
-                    # '''
-                    # ###<-
-                    # if status_api == "success":
-                    #     message = result["message"]
-                    #     if message.strip().startswith('|'):
-                    #         #st.markdown("### 📋 Resultado Tabular")
-                    #         st.markdown(message, unsafe_allow_html=True)
-                    #     else:
-                    #         st.success(f"✅ Resposta do Agente {message}")
-                    # elif status_api == "warning":
-                    #     st.warning(f"⚠️ {message}")
-                    # else:
-                    #     st.error(f"❌ {message}")
-                    # ###<-
-                    # '''
+                
                     if status_api == "success":
                         st.markdown("### 📋 Resposta do Agente")
-                        st.markdown(message, unsafe_allow_html=True)
+                        if message.strip().startswith('|'):
+                            # Renderizar como tabela Markdown
+                            st.markdown(message, unsafe_allow_html=True)
+                        else:
+                            # Renderizar como texto simples
+                            st.success(f"✅ Resposta do Agente: {message}")
                         logger.info(f"Consulta bem-sucedida: {message[:100]}...")
                     elif status_api == "warning":
                         st.warning(f"⚠️ Atenção do Agente: {message}")
-                        if data:
-                            df = pd.DataFrame(data)
-                            st.dataframe(df, use_container_width=True)
                         logger.warning(f"Consulta com alerta: {message[:100]}...")
                     else:  # status_api == "error" ou outro
                         st.error(f"❌ O Agente encontrou um problema: {message}")
                         logger.error(f"Erro do agente na consulta: {message}")
+                    # result = response.json()
+                    # status_api = result.get("status", "info")
+                    # message = result.get("message") or result.get("answer") or "Nenhuma resposta recebida da API."
+                    # data = result.get("data", [])  # Espera uma lista de dicionários para os dados
+                    # if status_api == "success":
+                    #     st.markdown("### 📋 Resposta do Agente")
+                    #     st.markdown(message, unsafe_allow_html=True)
+                    #     logger.info(f"Consulta bem-sucedida: {message[:100]}...")
+                    # elif status_api == "warning":
+                    #     st.warning(f"⚠️ Atenção do Agente: {message}")
+                    #     if data:
+                    #         df = pd.DataFrame(data)
+                    #         st.dataframe(df, use_container_width=True)
+                    #     logger.warning(f"Consulta com alerta: {message[:100]}...")
+                    # else:  # status_api == "error" ou outro
+                    #     st.error(f"❌ O Agente encontrou um problema: {message}")
+                    #     logger.error(f"Erro do agente na consulta: {message}")
                 else:
                     st.error(f"❌ Erro na comunicação com a API: Código {response.status_code} - {response.text}")
                     logger.error(f"Erro da API na consulta: {response.status_code} - {response.text}")
